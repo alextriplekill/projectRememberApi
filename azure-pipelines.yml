@@ -1,0 +1,33 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+- develop
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: deploy_api
+  displayName: "Deploy API"
+  jobs:
+  - deployment: api
+    displayName: "Deploy API"
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: AzureRmWebAppDeployment@4
+              inputs:
+                ConnectionType: 'AzureRM'
+                azureSubscription: 'Free Trial(75e41e46-b828-4dd9-ba5f-ec0f8c5c6075)'
+                appType: 'webApp'
+                WebAppName: 'OAPP01'
+                packageForLinux: '$(System.DefaultWorkingDirectory)/'
+                ScriptType: 'Inline Script'
+                InlineScript: |
+                  npm i
+                  npm run start
