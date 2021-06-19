@@ -27,7 +27,7 @@ stages:
                 azureSubscription: 'Free Trial(75e41e46-b828-4dd9-ba5f-ec0f8c5c6075)'
                 appType: 'webApp'
                 WebAppName: 'OAPP01'
-                packageForLinux: '$(System.DefaultWorkingDirectory)/'
+                packageForLinux: '$(System.DefaultWorkingDirectory)/*'
                 ScriptType: 'Inline Script'
                 InlineScript: |
                   npm i
